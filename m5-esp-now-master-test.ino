@@ -251,7 +251,7 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 
 uint8_t screen_orientation = 3;
 
-uint8_t chosenTextSize = 1;
+uint8_t chosenTextSize = 2;
 
 void setup() {
   M5.begin();
@@ -261,7 +261,7 @@ void setup() {
   // init the text buffer display and print welcome text on the display
   Serial.printf("textsize=%i",M5.Lcd.textsize);
   tb_display_init(screen_orientation,M5.Lcd.textsize);
-  tb_display_print_String("M5StickC-Plus-Textbuffer-Display - Master espNOW");
+  tb_display_print_String("Mercator Origins - Master espNOW Testbed");
 
   Serial.begin(115200);
   //Set device in STA mode to begin with

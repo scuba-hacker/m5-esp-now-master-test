@@ -31,12 +31,14 @@
 
 #include <M5StickCPlus.h>
 
+#include "tb_display.h"
+
 #include <esp_now.h>
 #include <WiFi.h>
 
 // Global copy of slave
 esp_now_peer_info_t slave;
-#define CHANNEL 3
+#define CHANNEL 1
 #define PRINTSCANRESULTS 0
 #define DELETEBEFOREPAIR 0
 
@@ -217,15 +219,31 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   snprintf(macStr, sizeof(macStr), "%02x:%02x:%02x:%02x:%02x:%02x",
            mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
   Serial.print("Last Packet Sent to: "); Serial.println(macStr);
-  Serial.print("Last Packet Send Status: "); Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  Serial.print("Last Packet Send Status: "); 
+
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  tb_display_print_String(status == ESP_NOW_SEND_SUCCESS ? "Del Ok " : "Del Fail ");
 }
+
+// screen Rotation values:
+// 1 = Button right
+// 2 = Button above
+// 3 = Button left
+// 4 = Button below
+
+uint8_t screen_orientation = 3;
+
+uint8_t chosenTextSize = 2;
 
 void setup() {
   M5.begin();
 
-  M5.Lcd.setCursor(55, 5);
-  M5.Lcd.setTextSize(4);
-  M5.Lcd.printf("Master espNOW\n");
+  M5.Lcd.setTextSize(chosenTextSize);
+
+  // init the text buffer display and print welcome text on the display
+  Serial.printf("textsize=%i",M5.Lcd.textsize);
+  tb_display_init(screen_orientation,M5.Lcd.textsize);
+  tb_display_print_String("M5StickC-Plus-Textbuffer-Display - Master espNOW");
 
   Serial.begin(115200);
   //Set device in STA mode to begin with

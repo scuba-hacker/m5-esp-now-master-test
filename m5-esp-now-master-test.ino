@@ -115,8 +115,10 @@ void ScanForSlave() {
 
   if (slaveFound) {
     Serial.println("Slave Found, processing..");
+    tb_display_print_String("Slave Found, processing...");
   } else {
     Serial.println("Slave Not Found, trying again.");
+    tb_display_print_String("No Slave, trying again.");
   }
 
   // clean up ram

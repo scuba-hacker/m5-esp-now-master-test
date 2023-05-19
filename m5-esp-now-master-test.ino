@@ -31,9 +31,8 @@
 
 #include <M5StickCPlus.h>
 
-uint16_t messagesDelivered = 0;
-uint16_t messagesFailedToDeliver = 0;
-
+uint16_t espNOWMessagesDelivered = 0;
+uint16_t espNOWMessagesFailedToDeliver = 0;
 
 #include "tb_display.h"
 
@@ -233,13 +232,13 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 
   if (status == ESP_NOW_SEND_SUCCESS)
   {
-    messagesDelivered++;   
-    sprintf(buffer,"Del Ok %hu ",messagesDelivered);
+    espNOWMessagesDelivered++;   
+    sprintf(buffer,"Del Ok %hu ",espNOWMessagesDelivered);
   }
   else
   {
-    messagesFailedToDeliver++;
-    sprintf(buffer,"Del Fail %hu ",messagesFailedToDeliver);
+    espNOWMessagesFailedToDeliver++;
+    sprintf(buffer,"Del Fail %hu ",espNOWMessagesFailedToDeliver);
   }
   
   tb_display_print_String(buffer);

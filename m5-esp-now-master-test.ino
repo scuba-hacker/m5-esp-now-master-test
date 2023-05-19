@@ -192,10 +192,13 @@ void deletePeer() {
   }
 }
 
-uint8_t data = 0;
+uint8_t data = 33;
 // send data
 void sendData() {
   data++;
+  if (data == 128)
+    data = 33;
+    
   const uint8_t *peer_addr = slave.peer_addr;
   Serial.print("Sending: "); Serial.println(data);
   esp_err_t result = esp_now_send(peer_addr, &data, sizeof(data));
@@ -262,7 +265,11 @@ void setup() {
   // init the text buffer display and print welcome text on the display
   Serial.printf("textsize=%i",M5.Lcd.textsize);
   tb_display_init(screen_orientation,M5.Lcd.textsize);
-  tb_display_print_String("Mercator Origins - Master espNOW Testbed");
+  tb_display_print_String("Mercator Origins - Master ESPNow Testbed\n");
+  delay(1000);
+  tb_display_print_String("Wait 15 seconds before ESPNow startup.");
+  delay(15000);
+  tb_display_print_String("ESPNow starting up...");
 
   Serial.begin(115200);
   //Set device in STA mode to begin with

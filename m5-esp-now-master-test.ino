@@ -251,7 +251,7 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 
 uint8_t screen_orientation = 3;
 
-uint8_t chosenTextSize = 2;
+uint8_t chosenTextSize = 1;
 
 void setup() {
   M5.begin();
